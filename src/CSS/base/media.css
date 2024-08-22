@@ -1,0 +1,16 @@
+/* expetion query */
+@media only screen and (max-width: 992px) {
+  .custom-form {
+    width: 100%;
+  }
+  .form-element input {
+    width: 100%;
+  }
+  .error {
+    width: 100%;
+  }
+  .side-bar-link {
+    font-size: 12px !important;
+    margin: 0 3px !important;
+  }
+}
