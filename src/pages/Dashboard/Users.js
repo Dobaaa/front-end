@@ -39,6 +39,13 @@ export default function Users() {
       <td>{item.name}</td>
       <td>{item.email}</td>
       <td>
+        {item.role === "1996"
+          ? "Admin"
+          : item.role === "2001"
+          ? "User"
+          : "Writer"}
+      </td>
+      <td>
         <div className="d-flex  gap-3 justify-content-center align-items-center ">
           <Link to={`${item.id}`}>
             <FontAwesomeIcon icon={faPenToSquare} />
@@ -63,13 +70,19 @@ export default function Users() {
   }
   return (
     <div className="w-100 p-2 bg-white">
-      <h2>users data</h2>
+      <div className="d-flex align-items-center justify-content-between">
+        <h2>users data</h2>
+        <Link to="/dashboard/user/add" className="btn btn-primary">
+          Add User
+        </Link>
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>ID</th>
             <th>User Name</th>
             <th>Email</th>
+            <th>Role</th>
             <th>Action</th>
           </tr>
         </thead>

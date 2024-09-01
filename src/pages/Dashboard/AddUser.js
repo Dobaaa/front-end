@@ -1,32 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Axios } from "../../Api/Axios";
 import { RequierTokenEndPoint } from "../../Api/Api";
 import LoadingSpinner from "../../components/Loading/Loading";
 
-export default function UserDetails() {
+export default function AddUser() {
   const [name, SetName] = useState("");
   const [email, SetEmail] = useState("");
+  const [password, SetPassword] = useState("");
   const [Role, SetRole] = useState("");
-  const [disable, SetDisabel] = useState("");
   const [Loading, SetLoading] = useState(false);
-  const ID = window.location.pathname.split("/").slice(-1)[0];
-  useEffect(() => {
-    Axios.get(`${RequierTokenEndPoint}/${ID}`)
-      .then((data) => {
-        SetName(data.data.name);
-        SetEmail(data.data.email);
-        SetRole(data.data.role);
-      })
-      .then(() => SetDisabel(false));
-  }, []);
+
   async function HandelSubmit(e) {
     SetLoading(true);
     e.preventDefault();
     try {
-      const res = await Axios.post(`${RequierTokenEndPoint}/edit/${ID}`, {
+      const res = await Axios.post(`${RequierTokenEndPoint}/add`, {
         name: name,
         email: email,
+        password: password,
         role: Role,
       });
       window.location.pathname = "/dashboard/users";
@@ -58,6 +50,15 @@ export default function UserDetails() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            value={password}
+            placeholder="new pass....."
+            onChange={(e) => SetPassword(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Role</Form.Label>
           <Form.Select
             placeholder="put role....."
@@ -71,9 +72,7 @@ export default function UserDetails() {
             <option value="1996">Writer</option>
           </Form.Select>
         </Form.Group>
-        <button disabled={disable} className="btn btn-primary">
-          Save
-        </button>
+        <button className="btn btn-primary">Add</button>
       </Form>
     </>
   );
